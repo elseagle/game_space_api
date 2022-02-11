@@ -16,6 +16,9 @@ def create_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
     db.init_app(app)
 
+    """
+    Swagger UI configurations
+    """
     SWAGGER_URL = "/docs"
     API_URL = "/static/swagger.json"
     swaggerui_blueprint = get_swaggerui_blueprint(
@@ -24,6 +27,7 @@ def create_app():
         config={"app_name": "Get best value for games application"},
     )
 
+    
     app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
     from blueprints.api_views import main as api_endpoints
@@ -33,6 +37,7 @@ def create_app():
     app.register_blueprint(miscellanous)
 
     return app
+
 
 if __name__ == "__main__":
     app = create_app()
