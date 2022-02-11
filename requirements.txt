@@ -1,0 +1,9 @@
+black==22.1.0
+Flask==2.0.2
+Flask-SQLAlchemy==2.5.1
+flask-swagger-ui==3.36.0
+jsonschema==4.4.0 
+pip-chill==1.0.1
+psycopg2-binary==2.9.3
+python-dotenv==0.19.2
+
