@@ -1,4 +1,16 @@
-def validator(data):
+def validator(data: dict):
+
+    """Validate upload game request payload
+
+    Conditions:
+        - game name must not an empty string
+        - game price and game space must be positive
+
+    Parameters:
+        data (dict): request payload dictionary
+        
+    Raises an error if none of the conditions are met
+    """
     for key, value in data.items():
         if type(value) == str:
             if not value.strip():
@@ -8,6 +20,11 @@ def validator(data):
                 raise Exception(f"Game {key} can only be a positive value")
 
 
+
+"""
+JSON SCHEMA for post game request payload
+Ensures the request payload has valid properties
+"""
 game_schema = {
     "$schema": "http://json-schema.org/draft-07/schema",
     "$id": "http://example.com/example.json",

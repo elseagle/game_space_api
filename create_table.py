@@ -1,14 +1,37 @@
+import sys
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
 from app import create_app
+from utils.generate_games import generate
 
 db = SQLAlchemy(create_app())
+
+
+"""
+Check database connection
+"""
+
+try:
+    db.session.execute(text("SELECT 1"))
+    print("<h1>It works.</h1>")
+except:
+    print("<h1>Something is broken.</h1>")
+    sys.exit()
+
+"""
+Delete table if it already exists
+"""
 
 db.engine.execute(
     """
     DROP TABLE IF EXISTS game;
     """
 )
+
+
+"""
+Create game table with name, price and space
+"""
 
 db.engine.execute(
     """
@@ -23,19 +46,23 @@ db.engine.execute(
 
 print("game table created successfully")
 
-try:
-    db.session.execute(text("SELECT 1"))
-    print("<h1>It works.</h1>")
-except:
-    print("<h1>Something is broken.</h1>")
+"""
+Insert randomly generated games into the database
+"""
 
-db.engine.execute(
-    """
-    INSERT INTO game(name, price, space) VALUES 
-    ('john.do,e@zmail.,com', 772.1223, 1073741824);
-    """
-)
-
+for game in generate(1000):
+    try:
+        db.engine.execute(
+            f"""
+            INSERT INTO game(name, price, space) VALUES 
+            ('{game["name"]}', {game["price"]}, {game["space"]});
+            """
+        )
+        print(f"{game} inserted successfully")
+    except:
+        print('\n')
+        print(f">>>>>>>>>>>>>>>>>>>>>>>DB insert failed for {game}")
+        print('\n')
 
 for record in db.engine.execute("SELECT * FROM game;"):
     print(record)
