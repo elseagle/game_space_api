@@ -8,7 +8,7 @@ def validator(data: dict):
 
     Parameters:
         data (dict): request payload dictionary
-        
+
     Raises an error if none of the conditions are met
     """
     for key, value in data.items():
@@ -18,7 +18,6 @@ def validator(data: dict):
         else:
             if value < 0.0:
                 raise Exception(f"Game {key} can only be a positive value")
-
 
 
 """

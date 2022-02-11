@@ -22,15 +22,6 @@ def test_homepage(flask_connection):
     assert response.status_code == 302
 
 
-def test_status(flask_connection):
-    response = flask_connection.get(
-        "/status",
-    )
-    response
-    print(f"{str(response.data)}")
-    assert response.status_code == 200
-
-
 # def test_docs(flask_connection):
 # response = flask_connection.post(
 #     "/api/v1/games",

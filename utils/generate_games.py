@@ -3,12 +3,12 @@ from faker import Faker
 
 
 def generate(count: int) -> list:
-    
+
     """Generates a list of games to be populated into the database
 
     Parameters:
         count (int): number of games to be created
-        
+
     Returns (list): list of randomly generated games
     """
     fake = Faker()
@@ -20,4 +20,3 @@ def generate(count: int) -> list:
         }
         for i in range(count)
     ]
-    

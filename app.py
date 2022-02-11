@@ -16,6 +16,9 @@ def create_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
     db.init_app(app)
 
+    """
+    Swagger UI configurations
+    """
     SWAGGER_URL = "/docs"
     API_URL = "/static/swagger.json"
     swaggerui_blueprint = get_swaggerui_blueprint(

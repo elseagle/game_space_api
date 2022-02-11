@@ -19,8 +19,8 @@ main = Blueprint("main", __name__, url_prefix="/api/v1")
 def status():
     """
     Checks if the web server can connect to the database
-      
-    Returns 
+
+    Returns
         - (json): database connection status if it is a get request
         - appropriate status code
     """
@@ -41,7 +41,7 @@ def save_game():
 
     Request body:
         (json): name, price and space
-        
+
     Requirements:
         - Name must not be an empty string and it must be unique(no two games can have the same name)
         - Price must be a positive Floating point number
@@ -50,8 +50,8 @@ def save_game():
     Database Operations:
         Inserts a validated game into the database
 
-    Returns: 
-        - (json): 
+    Returns:
+        - (json):
             - Created game if the game was created successfully
                                 OR
             - Error message if the game does not meet one or more requirements
@@ -111,7 +111,7 @@ def get_best_value_games():
 
     Query Parameters:
         pen_drive_space(int): space in bytes
-        
+
     Conditions:
         - Combination of games must have the highest total value of all possible game combinations and also fit the given pen-drive space
         - pen_drive_space query parameter must be a positive integer
@@ -119,8 +119,8 @@ def get_best_value_games():
     Database Operations:
         Get all games that have a space less than or equal to the pen drive space
 
-    Returns: 
-        - (json): 
+    Returns:
+        - (json):
             - A list of games, total_space of the game comnbination, remaining space left on the pen_drive and total value of the game combination
                                 OR
             - Error message if the pen_drive_space is not a positive integer

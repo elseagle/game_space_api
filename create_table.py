@@ -60,9 +60,9 @@ for game in generate(1000):
         )
         print(f"{game} inserted successfully")
     except:
-        print('\n')
+        print("\n")
         print(f">>>>>>>>>>>>>>>>>>>>>>>DB insert failed for {game}")
-        print('\n')
+        print("\n")
 
 for record in db.engine.execute("SELECT * FROM game;"):
     print(record)
