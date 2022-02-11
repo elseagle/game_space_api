@@ -2,9 +2,15 @@ from flask import Blueprint, request, jsonify, render_template
 from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError
 from jsonschema import validate as json_validate
-from app import db
-from utils.game_schema import validator, game_schema
-from utils.game_combination import get_game_combination
+
+try:
+    from app import db
+    from utils.game_schema import validator, game_schema
+    from utils.game_combination import get_game_combination
+except ImportError:
+    from ..app import db
+    from ..utils.game_schema import validator, game_schema
+    from ..utils.game_combination import get_game_combination
 
 main = Blueprint("main", __name__, url_prefix="/api/v1")
 

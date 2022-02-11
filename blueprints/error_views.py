@@ -11,5 +11,4 @@ def index():
 
 @miscellanous.app_errorhandler(404)
 def not_found(e):
-    print("sffdsf")
-    return render_template("404.html")
+    return render_template("404.html"), 404

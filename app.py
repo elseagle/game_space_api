@@ -26,14 +26,19 @@ def create_app():
 
     app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
-    from blueprints.api_views import main as api_endpoints
-    from blueprints.error_views import miscellanous
+    try:
+        from blueprints.api_views import main as api_endpoints
+        from blueprints.error_views import miscellanous
+    except ImportError:
+        from .blueprints.api_views import main as api_endpoints
+        from .blueprints.error_views import miscellanous
 
     app.register_blueprint(api_endpoints)
     app.register_blueprint(miscellanous)
 
     return app
 
+
 if __name__ == "__main__":
     app = create_app()
-    app.run()
+    app.run(port=5000)
