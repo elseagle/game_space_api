@@ -24,9 +24,9 @@ def test_swagger_url(flask_connection):
 
 def test_docs_redirect(flask_connection):
     response = flask_connection.get(
-        "/",
+        "/docs",
     )
-    assert response.status_code == 302
+    assert response.status_code == 308
 
 
 def test_status(flask_connection_with_db):
