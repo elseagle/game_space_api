@@ -1,6 +1,7 @@
 import pytest
 
-from ..app import create_app
+from ..utils.generate_games import generate
+from ..app import create_app, db
 
 
 @pytest.fixture(scope="module")
@@ -17,14 +18,59 @@ def flask_connection():
     ctx.pop()
 
 
+@pytest.fixture(scope="module")
+def flask_connection_with_db():
+    app = create_app()
+
+    app.config["TESTING"] = True
+    app.testing = True
+
+    # This creates an in-memory sqlite db
+    # See https://martin-thoma.com/sql-connection-strings/
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite://"
+
+    client = app.test_client()
+    with app.app_context():
+        db.create_all()
+        db.init_app(app)
+        for game in generate(10):
+            try:
+
+                db.engine.execute(
+                    """
+                    CREATE TABLE game (
+                        id SERIAL PRIMARY KEY,
+                        name VARCHAR(255) NOT NULL UNIQUE,
+                        price DECIMAL(65 , 5) NOT NULL,   
+                        space BIGINT NOT NULL
+                    );
+                    """)
+                db.engine.execute(
+                    f"""
+                    INSERT INTO game(name, price, space) VALUES 
+                    ('{game["name"]}', {game["price"]}, {game["space"]});
+                    """
+                )
+                print(f"{game} inserted successfully")
+            except:
+                print("\n")
+                print(f">>>>>>>>>>>>>>>>>>>>>>>DB insert failed for {game}")
+                print("\n")
+
+    yield client
+
+
 @pytest.fixture(scope="session")
 def get_games():
     games = [
-        {"name": "FIFA22", "price": "500.92", "space": 2390222111},
-        {"name": "FIFA21", "price": "100.99", "space": 4392221110},
-        {"name": "Vanguard", "price": "600.12", "space": 2390232111},
-        {"name": "Last of Us", "price": "50.92", "space": 1024678290},
-        {"name": "Ghost", "price": "400.42", "space": 3290212191},
+        {"name": "FIFA22", "price": 500.92, "space": 2390222111},
+        {"name": "FIFA21", "price": 100.99, "space": 4392221110},
+        {"name": "Vanguard", "price": 600.12, "space": 2390232111},
+        {"name": "Last of Us", "price": 50.92, "space": 1024678290},
+        {"name": "Ghost", "price": 400.42, "space": 3290212191},
+        {"name": "MarkTrip", "price": 71.722, "space": 1073741824},
+        {"name": "Airforce One", "price": 71.722, "space": 973741824},
+        {"name": "Diablo 112", "price": 71.722, "space": 2073741824},
     ]
     return games
 

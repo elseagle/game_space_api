@@ -10,11 +10,11 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 db = SQLAlchemy()
 
 
-def create_app():
+def create_app(database=db):
     app = Flask(__name__)
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
-    db.init_app(app)
+    database.init_app(app)
 
     """
     Swagger UI configurations
@@ -43,5 +43,5 @@ def create_app():
 
 
 if __name__ == "__main__":
-    app = create_app()
+    app = create_app(database=db)
     app.run(port=5000)
