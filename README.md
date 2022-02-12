@@ -12,8 +12,8 @@
 <!-- MarkdownTOC -->
 
 - [Overview](#Overview)
-- [Docker Prequisites](#docker prequisites)
-- [Dockerless Prequisites](#dockerless prequisites)
+- [Docker Prequisites](#docker-prequisites)
+- [Dockerless Prequisites](#dockerless-prequisites)
 - [Quickstart](#Quickstart)
 - [Testing](#Testing)
 - [Endpoints](#Endpoints)
