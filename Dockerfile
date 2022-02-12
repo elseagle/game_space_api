@@ -13,7 +13,6 @@ RUN pip3 install --upgrade pip
 RUN pip3 install psycopg2-binary
 RUN pip3 install -r requirements.txt
 RUN pip3 install pytest
-
-RUN chmod +x ./start.sh
-
-CMD ["sh","start.sh"]
+COPY start.sh /usr/bin/start.sh
+RUN chmod +x /usr/bin/start.sh
+CMD [ "sh", "/usr/bin/start.sh"]

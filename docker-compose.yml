@@ -24,5 +24,8 @@ services:
           - ./:/app
         depends_on:
           - db
+        environment:
+          CREATE_TABLE: "true"
+
 
 

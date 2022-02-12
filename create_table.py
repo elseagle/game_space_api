@@ -43,7 +43,7 @@ def create_table(database):
         CREATE TABLE game (
             id SERIAL PRIMARY KEY,
             name VARCHAR(255) NOT NULL UNIQUE,
-            price DECIMAL(65 , 5) NOT NULL,   
+            price DECIMAL(65 , 2) NOT NULL,   
             space BIGINT NOT NULL
         );
         """
