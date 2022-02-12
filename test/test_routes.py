@@ -15,7 +15,7 @@ def test_homepage_redirect(flask_connection):
     assert response.status_code == 302
 
 
-def test_sawagger_url(flask_connection):
+def test_swagger_url(flask_connection):
     response = flask_connection.get(
         "/static/swagger.json",
     )
