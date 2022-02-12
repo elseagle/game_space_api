@@ -2,11 +2,11 @@
 
 ### Game space API allows you to do the following:
 
-[x] Check status of the database connection.
+- [x] Check status of the database connection.
 
-[x] Upload game information to the database.
+- [x] Upload game information to the database.
 
-[x] Return the best possible combination of games from the database that can fit into a hypothetical pen drive with a specified drive space in bytes. 
+- [x] Return the best possible combination of games from the database that can fit into a hypothetical pen drive with a specified drive space in bytes. 
 
 
 <!-- MarkdownTOC -->
