@@ -34,7 +34,7 @@ A service that returns the best possible combination of games from the database 
 - [Docker](https://www.docker.com/)
 
 
-# Docker Prerequisites
+# Docker Prequisites
 
 1. Clone this repository.
 
@@ -47,7 +47,7 @@ A service that returns the best possible combination of games from the database 
    * SET DATABASE_URL to postgres database uri e.g postgresql+psycopg2://[postgres user]:[postgres password]@db/[postgres name] where name, user and password is as specified in the docker-compose.yml file in the root directory.
 
 
-# Dockerless Prerequisites
+# Dockerless Prequisites
 
 > If you choose to run this project without docker, please ensure the following requirements are met.
 
