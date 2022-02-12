@@ -8,3 +8,4 @@ venv
 data/
 postgres_data/
 .idea
+.vscode
