@@ -1,4 +1,6 @@
 import json
+
+
 def test_page_404(flask_connection):
     response = flask_connection.get(
         "/random_route",
@@ -48,7 +50,6 @@ def test_best_value_games(flask_connection_with_db, get_games):
     pen_drive_space = 9827128972
     response = flask_connection_with_db.post(
         f"/api/v1/best_value_games?pen_drive_space={pen_drive_space}",
-
         content_type="application/json",
     )
     res = response.json

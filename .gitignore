@@ -9,3 +9,4 @@ data/
 postgres_data/
 .idea
 .vscode
+.coverage

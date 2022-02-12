@@ -44,7 +44,8 @@ def flask_connection_with_db():
                         price DECIMAL(65 , 5) NOT NULL,   
                         space BIGINT NOT NULL
                     );
-                    """)
+                    """
+                )
                 db.engine.execute(
                     f"""
                     INSERT INTO game(name, price, space) VALUES 
