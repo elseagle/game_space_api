@@ -75,7 +75,7 @@ A service that returns the best possible combination of games from the database 
 
 1. Open a command line terminal and navigate to the directory of the cloned repository.
 
-2. You have to create a games table in the database on the first run of the application, this can be easily done by setting CREATE_TABLE == "true" in the web enviroment section of the docker-compose.yml file.
+2. You have to create a games table in the database on the first run of the application, this can be easily done by setting CREATE_TABLE with value "true" in the web enviroment section of the docker-compose.yml file.
 
 3. Build  the docker image of the application using the command:
 
@@ -89,7 +89,7 @@ A service that returns the best possible combination of games from the database 
         $ docker-compose up 
     ```
 
-5. For subsequent runs, to avoid having to re-create the games table on every run set CREATE_TABLE == "false" and run the below command to effect the new changes.
+5. For subsequent runs, to avoid having to re-create the games table on every run set CREATE_TABLE with value  "false" and run the below command to effect the new changes.
 
     ```sh
         $ docker-compose build 
@@ -98,7 +98,7 @@ A service that returns the best possible combination of games from the database 
 
 ## Get started without docker
 
-1. Open a command line terminal and navigate to the directory of the cloned repository.
+1. Open a terminal and navigate to the directory of the cloned repository.
 
 2. Create a games table by running the following command.
 
