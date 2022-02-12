@@ -89,7 +89,7 @@ A service that returns the best possible combination of games from the database 
         $ docker-compose up 
     ```
 
-4. For subsequent runs, to avoid having to re-create the games table on every run set CREATE_TABLE == "false" and run the below command to effect the new changes.
+5. For subsequent runs, to avoid having to re-create the games table on every run set CREATE_TABLE == "false" and run the below command to effect the new changes.
 
     ```sh
         $ docker-compose build 
