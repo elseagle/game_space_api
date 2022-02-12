@@ -136,13 +136,13 @@ A service that returns the best possible combination of games from the database 
         $ docker ps 
     ```
 
-3. Get the container-id has highlighted in the picture below, the container name should be game_space_api_web.
+3. Get the container-id as highlighted(red) in the picture below, the container name should be game_space_api_web(green).
 
     Container id image
     <details>
     <summary></summary>
 
-    ![container-id](./static/container_id.png)
+    ![container-id](./static/container_id.jpg)
 
     </details>
 
@@ -159,6 +159,7 @@ A service that returns the best possible combination of games from the database 
         $ coverage run -m pytest -vv --disable-warnings && coverage report --show-missing 
     ```
 
+
 ## To test locally without docker:
 
 - Run the tests in your local terminal using the command.
@@ -167,71 +168,124 @@ A service that returns the best possible combination of games from the database 
         $ coverage run -m pytest -vv --disable-warnings && coverage report --show-missing 
     ```
 
+
 # Endpoints
-- GET /api/v1/status
 
-   - returns appropriate status code and {"database": "healthy"} when the database connection is healthy
-   - returns appropriate status code and {"database": "unhealthy"} when the database connection isn't healthy
+1. GET http://localhost:5000/docs/
 
-- HEAD /api/v1/status
+    - HTML web page showing all the API endpoints. It uses OpenAPI specifications for documenting the APIs. It can also be used to test all the endpoints.
 
-   - Returns appropriate status code when the database connection is healthy
-   - Returns appropriate status code when the database connection isn't healthy
+    - Docs Image:
+        <details>
+        <summary></summary>
 
-- GET /docs
+        ![Docs](./static/docs.png)
 
-   - Opens HTML document with endpoint specification
+        </details>
 
-- POST /api/v1/games
 
-   - Validates the payload and saves the game into the DB
-   - Request payload schema:
+2. GET http://localhost:5000/api/v1/status
 
-   json
-   {
-     "name": "Diablo 112", // unique, not empty string
-     "price": 71.7, // non-negative float
-     "space": 1073741824 // positive (1 GB in bytes)
-   }
-   
+    - **Success** returns status code 200 when the database connection is healthy.
 
-   - Success sample response payload:
-
-   json
-   {
-     "name": "Fortnite 43",
-     "price": 71.7,
-     "space": 1073741824
-   }
-   
-
-   - For success and failure return appropriate status codes
-
-- POST /api/v1/best_value_games?pen_drive_space={POSITIVE_INTEGER}
-   - Return a combination of games that has the highest total value of all possible game combinations 
-     that fits given pen-drive space
-   - Validate pen_drive_space query parameter
-   - Success sample response payload:
-    {
-        "games": [
+        ```json
         {
-            "name": "Super Game",
-            "price": 71.7,
-            "space": 1073741824
-        },
-        {
-            "name": "Extra Game",
-            "price": 100.78,
-            "space": 2147483648
+            "database": "healthy"
         }
-        ],
-        "total_space": 3221225472, // total space of games
-        "remaining_space": 1024 // empty space on the pen-drive after download
-        "total_value": 172.48 // float
-    }
-   
+        ```
+    - **Failure** returns status code 502 when the database connection isn't healthy.
+        ```json
+        {
+            "database": "unhealthy"
+        }
+        ```
 
-Talk about /docs too
-Check docs for 
-localhost/blablabla
-show swagger picture
+
+3. HEAD http://localhost:5000/api/v1/status
+
+    - **Success** returns status code 200 when the database connection is healthy
+
+    - **Failure** returns status code 502 when the database connection isn't healthy
+
+
+4. POST http://localhost:5000/api/v1/games
+
+    - Has a request payload with the following schema and specifications.
+        ```json
+            {
+                "name": "Diablo 112", // unique, not empty string
+                "price": 71.7, // non-negative float
+                "space": 1073741824 // positive (1 GB in bytes)
+            }
+        ```
+
+    - Validates the payload and saves the game information into the DB
+
+    - **Success** sample response payload:
+
+        status code: 201 
+        ```json
+            {
+                "name": "Diablo 112",
+                "price": 71.7,
+                "space": 1073741824 
+            }
+        ```
+
+    - **Failure** sample response payload:
+
+        status code: 400
+        ```json
+            {
+            "data": {
+                    "name": "Diablo 112",
+                    "price": 100,
+                    "space": -1222232
+                    },
+            "message": "Game space can only be a positive value",
+            "status": "error"
+            }
+        ```
+
+5. POST http://localhost:5000/api/v1/best_value_games?pen_drive_space={POSITIVE_INTEGER}
+
+    - Validate pen_drive_space query parameter which must be a positive integer.
+
+    - It returns a combination of games that has the highest total value of all possible game combinations 
+     that fits given pen-drive space
+
+    - **Success** sample response payload:
+
+        status code: 200
+        ```json
+            {
+                "games": [
+                {
+                    "name": "Super Game",
+                    "price": 71.7,
+                    "space": 1073741824
+                },
+                {
+                    "name": "Extra Game",
+                    "price": 100.78,
+                    "space": 2147483648
+                }
+                ],
+                "total_space": 3221225472, // total space of games
+                "remaining_space": 1024 // empty space on the pen-drive after download
+                "total_value": 172.48 // float
+            }
+        ```
+
+    - **Failure** sample response payload:
+
+        status code: 400
+        ```json
+            {
+            "message": "Pen drive space of -307374182 bytes is not a positive integer",
+            "status": "error"
+            }
+        ```   
+
+    
+   
