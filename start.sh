@@ -1,2 +1,2 @@
-
-flask run --host=0.0.0.0
+pip3 install faker
+flask run --host=0.0.0.0 --port=5500

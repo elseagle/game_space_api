@@ -44,4 +44,4 @@ def create_app(database=db):
 
 if __name__ == "__main__":
     app = create_app(database=db)
-    app.run(port=5000)
+    app.run(port=5500)

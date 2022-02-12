@@ -1,7 +1,47 @@
 import pytest
 
+# from create_table import create_table, seed_table, create_app, db
 from ..utils.generate_games import generate
 from ..app import create_app, db
+
+
+def create_table(database):
+    """
+    Create game table with name, price and space
+    """
+
+    database.engine.execute(
+        """
+        CREATE TABLE game (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(255) NOT NULL UNIQUE,
+            price DECIMAL(65 , 5) NOT NULL,   
+            space BIGINT NOT NULL
+        );
+        """
+    )  # AUTOINCREMENT for id for other databases
+
+    print("game table created successfully")
+
+
+def seed_table(database, count=1000):
+    """
+    Insert randomly generated games into the database
+    """
+
+    for game in generate(count):
+        try:
+            database.engine.execute(
+                f"""
+                INSERT INTO game(name, price, space) VALUES 
+                ('{game["name"]}', {game["price"]}, {game["space"]});
+                """
+            )
+            print(f"{game} inserted successfully")
+        except:
+            print("\n")
+            print(f">>>>>>>>>>>>>>>>>>>>>>>database insert failed for {game}")
+            print("\n")
 
 
 @pytest.fixture(scope="module")
@@ -33,26 +73,12 @@ def flask_connection_with_db():
     with app.app_context():
         db.create_all()
         db.init_app(app)
+        create_table(database=db)
+
         for game in generate(10):
             try:
 
-                db.engine.execute(
-                    """
-                    CREATE TABLE game (
-                        id SERIAL PRIMARY KEY,
-                        name VARCHAR(255) NOT NULL UNIQUE,
-                        price DECIMAL(65 , 5) NOT NULL,   
-                        space BIGINT NOT NULL
-                    );
-                    """
-                )
-                db.engine.execute(
-                    f"""
-                    INSERT INTO game(name, price, space) VALUES 
-                    ('{game["name"]}', {game["price"]}, {game["space"]});
-                    """
-                )
-                print(f"{game} inserted successfully")
+                seed_table(database=db, count=10)
             except:
                 print("\n")
                 print(f">>>>>>>>>>>>>>>>>>>>>>>DB insert failed for {game}")
