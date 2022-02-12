@@ -83,4 +83,4 @@ if __name__ == "__main__":
     drop_table(database=db)
     create_table(database=db)
     seed_table(database=db)
-    seed_table(database=db)
+    select_table(database=db)
