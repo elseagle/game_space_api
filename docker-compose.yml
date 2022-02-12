@@ -19,7 +19,7 @@ services:
         build:
           context: .
         ports:
-          - 5000:5500
+          - 5001:5500
         volumes:
           - ./:/app
         depends_on:

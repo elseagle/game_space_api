@@ -80,13 +80,13 @@ A service that returns the best possible combination of games from the database 
 3. Build and run the application using the command:
 
     ```sh
-        $ docker-compose up 
+        $ docker-compose build
     ```
 
 4. For subsequent runs, to avoid having to re-create the games table on every run set CREATE_TABLE == "false" and run the below command to effect the new changes.
 
     ```sh
-        $ docker-compose build 
+        $ docker-compose up 
      ```
 
 
@@ -168,7 +168,68 @@ A service that returns the best possible combination of games from the database 
     ```
 
 # Endpoints
+- GET /api/v1/status
 
+   - returns appropriate status code and {"database": "healthy"} when the database connection is healthy
+   - returns appropriate status code and {"database": "unhealthy"} when the database connection isn't healthy
+
+- HEAD /api/v1/status
+
+   - Returns appropriate status code when the database connection is healthy
+   - Returns appropriate status code when the database connection isn't healthy
+
+- GET /docs
+
+   - Opens HTML document with endpoint specification
+
+- POST /api/v1/games
+
+   - Validates the payload and saves the game into the DB
+   - Request payload schema:
+
+   json
+   {
+     "name": "Diablo 112", // unique, not empty string
+     "price": 71.7, // non-negative float
+     "space": 1073741824 // positive (1 GB in bytes)
+   }
+   
+
+   - Success sample response payload:
+
+   json
+   {
+     "name": "Fortnite 43",
+     "price": 71.7,
+     "space": 1073741824
+   }
+   
+
+   - For success and failure return appropriate status codes
+
+- POST /api/v1/best_value_games?pen_drive_space={POSITIVE_INTEGER}
+   - Return a combination of games that has the highest total value of all possible game combinations 
+     that fits given pen-drive space
+   - Validate pen_drive_space query parameter
+   - Success sample response payload:
+    {
+        "games": [
+        {
+            "name": "Super Game",
+            "price": 71.7,
+            "space": 1073741824
+        },
+        {
+            "name": "Extra Game",
+            "price": 100.78,
+            "space": 2147483648
+        }
+        ],
+        "total_space": 3221225472, // total space of games
+        "remaining_space": 1024 // empty space on the pen-drive after download
+        "total_value": 172.48 // float
+    }
+   
 
 Talk about /docs too
 Check docs for 
