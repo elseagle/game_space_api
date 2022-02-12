@@ -36,13 +36,3 @@ def test_docs_redirect(flask_connection):
     response
     assert response.status_code == 302
 
-
-# def test_docs(flask_connection):
-# response = flask_connection.post(
-#     "/api/v1/games",
-#     json={"name": "Fortnite 43", "price": 71.7, "space": 1073741824},
-#     content_type="application/json"
-# )
-# response
-# print(f"{str(response.data)}")
-# assert response.status_code == 200
