@@ -1,4 +1,3 @@
-from ..test.conftest import get_games, get_pen_drive_space
 from ..utils.game_combination import get_game_combination
 
 
